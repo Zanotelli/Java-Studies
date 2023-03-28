@@ -1,4 +1,6 @@
-package entities;
+package model.entities;
+
+import model.exceptions.DomainException;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,7 +17,10 @@ public class Reservation {
     public Reservation() {
     }
 
-    public Reservation(Integer roomNumber, Date checkIn, Date checkOut) {
+    public Reservation(Integer roomNumber, Date checkIn, Date checkOut) throws DomainException {
+        if(checkIn.after(checkOut)){
+            throw new DomainException("A data de check-out não pode ser anterior a data de check-in!");
+        }
         this.roomNumber = roomNumber;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
@@ -26,16 +31,15 @@ public class Reservation {
         return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
     }
 
-    public String updateDates(Date checkIn, Date checkOut){
+    public void updateDates(Date checkIn, Date checkOut) throws DomainException {
         Date now = new Date();
         if(checkIn.before(now) || checkOut.before(now)){
-            return "A data de check-in ou check-out não podem ser anteriores a data de agora!";
+            throw new DomainException("A data de check-in ou check-out não podem ser anteriores a data de agora!");
         } if(checkIn.after(checkOut)){
-            return "A data de check-out não pode ser anterior a data de check-in!";
+            throw new DomainException("A data de check-out não pode ser anterior a data de check-in!");
         }
         this.checkIn = checkIn;
         this.checkOut = checkOut;
-        return null;
     }
 
     public Integer getRoomNumber() {

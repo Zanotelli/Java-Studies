@@ -34,3 +34,12 @@ utiliza
 - Utilizamos *Strings* retornadas pelos métodos para identificar se houve algum erro
 - Imprime o erro retornado na tela
 - Ainda utiliza uma lógica de *if-else*
+
+
+### GOOD Solution
+- Adição de um bloco *try-catch* entre as chamadas das funções que podem acarretar erros
+- Adição de *throws* de exceções dentro da classe *Reservation* e propagação das exceções por
+meio da adição das mesmas na assinatura do método
+- Tratamento dos diferentes tipos de exceção dentro do bloco
+- Criação de uma classe de exceção customisada *DomainException* que "extende"
+*Exception*, ou seja, exige tratamento
