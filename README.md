@@ -10,16 +10,27 @@ O repositório será dividido em vários módulos (um para cada seção), onde s
 *Hello World* na linguagem.
 
 
+---
 ## Seção 13 - Enumeração e composição
 Exercícios de enumeração e implementações de métodos de classes
 
 
+---
 ## Seção 15 - Tratamento de exceções 
 Utilização da estrutura *try-catch* para tratamento de exceções, estudando diferentes métodos de aplicações.
 Foram implementadas três soluções diferentes, todas efetivas, mas utilizando más e boas prátiacas.
 
-### VERY BAD
+### VERY BAD Solution
 - Tratamento de erros é feito **dentro da classe**
 - Não utiliza try-catch
 - Utiliza *throws* na assinatura da função, delegando o tratamento para uma classe superior (que
 não existe)
+- Delegação da responsabilidade de erros da classe *Reservation* para o método que a
+utiliza
+
+
+### BAD Solution
+- Delegamos a lógica de validação da atualização dos dados para classe *Reservation*
+- Utilizamos *Strings* retornadas pelos métodos para identificar se houve algum erro
+- Imprime o erro retornado na tela
+- Ainda utiliza uma lógica de *if-else*
