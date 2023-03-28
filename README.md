@@ -43,3 +43,37 @@ meio da adição das mesmas na assinatura do método
 - Tratamento dos diferentes tipos de exceção dentro do bloco
 - Criação de uma classe de exceção customisada *DomainException* que "extende"
 *Exception*, ou seja, exige tratamento
+
+
+
+---
+## Seção 16 - Jogo de Xadrez
+
+Abaixo, o design de sistema do projeto do jogo de xadrez:
+
+
+![img.png](./Secao-16/resources/chess-system-design.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
