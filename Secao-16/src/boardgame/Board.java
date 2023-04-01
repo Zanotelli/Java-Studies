@@ -26,7 +26,7 @@ public class Board {
     }
 
     public Piece piece(Position position){
-        if(positionExists(position))
+        if(!positionExists(position))
             throw new BoardException("Posição passada não existe no tabuleiro.");
         return pieces[position.getRow()][position.getColumn()];
     }
@@ -38,13 +38,32 @@ public class Board {
         piece.position = position;
     }
 
+    /**
+     * Retira uma peça (caso ela axita) de uma posição do tabuleiro
+     * @param position Posição que deseja se retirar a peça
+     * @return Um objeto 'Piece' caso haja uma peça naquela posição,
+     *         nulo caso o contrário
+     */
+    public Piece removePiece(Position position){
+        if(!positionExists(position))
+            throw new BoardException("Posição não exite no tabuleiro.");
+
+        Piece auxPiece = piece(position);
+        if (auxPiece == null)
+            return null;
+
+        auxPiece.position = null;
+        pieces[position.getRow()][position.getColumn()] = null;
+        return auxPiece;
+    }
+
     public void placePiece(Piece piece, int row, int column){
         pieces[row][column] = piece;
         piece.position = new Position(row, column);
     }
 
     public boolean positionExists(int row, int column){
-        return !(row >= 0 && row < rows && column >= 0 && column < columns);
+        return row >= 0 && row < rows && column >= 0 && column < columns;
     }
 
     public boolean positionExists(Position position){
@@ -52,8 +71,6 @@ public class Board {
     }
 
     public boolean thereIsAPiece(Position position){
-        if(positionExists(position))
-            throw new BoardException("Posição passada não existe no tabuleiro.");
         return piece(position) != null;
     }
 

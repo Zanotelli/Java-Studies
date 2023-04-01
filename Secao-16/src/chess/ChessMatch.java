@@ -1,6 +1,7 @@
 package chess;
 
 import boardgame.Board;
+import boardgame.Piece;
 import boardgame.Position;
 import chess.pieces.King;
 import chess.pieces.Rook;
@@ -21,6 +22,51 @@ public class ChessMatch {
             }
         }
         return mat;
+    }
+
+    /**
+     *
+     * @param soucePosition A posição de onde se deseja mover uma peça
+     * @param targetPosition A posição final da peça que se encontrava
+     *                       na posição de origem
+     * @return A peça capturada, caso já houvesse uma peça na posição de
+     *          destino, nulo caso o contrário
+     */
+    public ChessPiece performChessMove(ChessPosition soucePosition,
+                                       ChessPosition targetPosition){
+        Position source = soucePosition.toPosition();
+        Position target = targetPosition.toPosition();
+
+        validateSourcePosition(source);
+
+        Piece capturedPiece = makeMove(source, target);
+
+        return (ChessPiece)     capturedPiece;
+    }
+
+    /**
+     * Move uma peça de uma posição de origem à uma posição
+     * de destino, campturando qualquer peça no destino
+     * @param source Posição da peça de origem
+     * @param target Posição de destino
+     * @return A peça capturada, caso exista
+     */
+    private Piece makeMove(Position source, Position target){
+        Piece movedPiece = board.removePiece(source);
+        Piece capturedPiece = board.removePiece(target);
+        board.placePiece(movedPiece, target);
+        return capturedPiece;
+    }
+
+    /**
+     * Checa se existe uma peça na posição de origem
+     * @param source Posição de origem
+     * @throws ChessException Laça uma exceção caso não exista uma peça na
+     * posição de origem
+     */
+    private void validateSourcePosition(Position source) {
+        if(!board.thereIsAPiece(source))
+            throw new ChessException("Não exite uma peça na posição de origem");
     }
 
     private void placeNewPiece(char column, int row, ChessPiece piece) {
