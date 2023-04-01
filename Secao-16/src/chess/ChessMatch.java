@@ -24,6 +24,14 @@ public class ChessMatch {
         return mat;
     }
 
+
+    public boolean[][] possibleMoves(ChessPosition sourcePosition){
+        Position position = sourcePosition.toPosition();
+        validateSourcePosition(position);
+        return board.piece(position).possibleMoves();
+    }
+
+
     /**
      *
      * @param soucePosition A posição de onde se deseja mover uma peça

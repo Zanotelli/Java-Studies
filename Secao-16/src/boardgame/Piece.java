@@ -9,7 +9,10 @@ public abstract class Piece {
         this.board = board;
         position = null;
     }
-
+    /**
+     * Verifica todos os movimentos possíveis de uma determinada peça
+     * @return Matriz de movimentos possíveis
+     */
     public abstract boolean[][] possibleMoves();
 
     /**

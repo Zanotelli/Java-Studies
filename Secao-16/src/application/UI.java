@@ -57,20 +57,54 @@ public class UI {
         }
     }
 
+    /**
+     * Imprime o tabuleiro com as peças para a visualização
+     * do usuáro
+     * @param pieces Matriz com as peças no tabuleiro
+     */
     public static void printBoard(ChessPiece[][] pieces) {
         for (int i = 0; i < pieces.length; i++) {
             System.out.print((8 - i) + " ");
             for (int j = 0; j < pieces.length; j++) {
-                printPiece(pieces[i][j]);
+                printPiece(pieces[i][j], false);
             }
             System.out.println();
         }
         System.out.println("  a b c d e f g h");
     }
 
-    private static void printPiece(ChessPiece piece) {
+    /**
+     * Imprime o tabuleiro com as peças para a visualização
+     * do usuáro, com os movimentos possíveis marcados
+     * @param pieces Matriz com as peças no tabuleiro
+     * @param possibleMoves Matriz de booleanos indicando as posições
+     *                      para onde o usuário pode mover a peça
+     *                      selecionada
+     */
+    public static void printBoard(ChessPiece[][] pieces, boolean[][] possibleMoves) {
+        for (int i = 0; i < pieces.length; i++) {
+            System.out.print((8 - i) + " ");
+            for (int j = 0; j < pieces.length; j++) {
+                printPiece(pieces[i][j], possibleMoves[i][j]);
+            }
+            System.out.println();
+        }
+        System.out.println("  a b c d e f g h");
+    }
+
+    /**
+     * Imprime um determinado espaço do tabuleiro
+     * @param piece Peça a ser imprimida no tabuleiro
+     * @param background Define o backgroud. Local vazio caso
+     *                   falso, ou local de movimento possível
+     *                   caso verdadeiro
+     */
+    private static void printPiece(ChessPiece piece, boolean background) {
+        if(background){
+            System.out.print(ANSI_BLUE_BACKGROUND);
+        }
         if (piece == null) {
-            System.out.print("-");
+            System.out.print("-" + ANSI_RESET);
         }
         else {
             if (piece.getColor() == Color.WHITE) {
