@@ -68,6 +68,9 @@ public class UI {
         printBoard(match.getPieces());
         printCapturedPieces(captured);
         System.out.println();
+        if(match.isCheck()){
+            System.out.println("CHEQUE!!");
+        }
         System.out.println("Turno " + match.getTurn() );
         System.out.println("Esperando jogador " + translateName(match.getCurrentPlayer()));
         System.out.println();
