@@ -54,6 +54,8 @@ public class UI {
             return new ChessPosition(column, row);
         }catch (InputMismatchException e){
             throw new RuntimeException("Erro ao ler a posição. Valores válidos são de 'a1' até 'h8'");
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Entrada incorreta ou imcompleta");
         }
     }
 
