@@ -15,14 +15,11 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         ChessMatch match = new ChessMatch();
 
-        int jogador = 0;
-
         while (true){
             try {
                 UI.clearScreen();
-                UI.printBoard(match.getPieces());
+                UI.printMatch(match);
 
-                System.out.println("\nJogada do jogador " + (jogador + 1));
                 System.out.print("Origem: ");
                 ChessPosition origem = UI.readChessPosition(sc);
 
@@ -35,7 +32,6 @@ public class Main {
 
                 ChessPiece pecaCapturada = match.performChessMove(origem,destino);
 
-                jogador = (jogador + 1) % 2;
             } catch (BoardException e){
                 System.out.println(e.toString());
                 System.out.println("Pressione Enter para continuar...");

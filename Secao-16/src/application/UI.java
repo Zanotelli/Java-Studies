@@ -1,5 +1,6 @@
 package application;
 
+import chess.ChessMatch;
 import chess.ChessPiece;
 import chess.ChessPosition;
 import chess.Color;
@@ -57,6 +58,14 @@ public class UI {
         } catch (RuntimeException e) {
             throw new RuntimeException("Entrada incorreta ou imcompleta");
         }
+    }
+
+    public static void printMatch(ChessMatch match){
+        printBoard(match.getPieces());
+        System.out.println();
+        System.out.println("Turno " + match.getTurn() );
+        System.out.println("Esperando jogador " + translateName(match.getCurrentPlayer()));
+        System.out.println();
     }
 
     /**
@@ -117,5 +126,11 @@ public class UI {
             }
         }
         System.out.print(" ");
+    }
+
+    private static String translateName(Color color){
+        if(color == Color.WHITE)
+            return "Branco";
+        return "Preto";
     }
 }
