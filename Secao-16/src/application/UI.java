@@ -5,9 +5,7 @@ import chess.ChessPiece;
 import chess.ChessPosition;
 import chess.Color;
 
-import java.io.IOException;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.util.*;
 
 public class UI {
 
@@ -60,12 +58,25 @@ public class UI {
         }
     }
 
-    public static void printMatch(ChessMatch match){
+    /**
+     * Imprime o tabuleiro da partida, assim como os dados dos jogadores
+     *
+     * @param match    Partida de xadrez
+     * @param captured
+     */
+    public static void printMatch(ChessMatch match, LinkedList<ChessPiece> captured){
         printBoard(match.getPieces());
+        printCapturedPieces(captured);
         System.out.println();
         System.out.println("Turno " + match.getTurn() );
         System.out.println("Esperando jogador " + translateName(match.getCurrentPlayer()));
         System.out.println();
+    }
+
+    private static String translateName(Color color){
+        if(color == Color.WHITE)
+            return "Branco";
+        return "Preto";
     }
 
     /**
@@ -128,9 +139,20 @@ public class UI {
         System.out.print(" ");
     }
 
-    private static String translateName(Color color){
-        if(color == Color.WHITE)
-            return "Branco";
-        return "Preto";
+    private static void printCapturedPieces(LinkedList<ChessPiece> captured){
+        List<ChessPiece> white = captured.stream().filter(p -> p.getColor() == Color.WHITE).toList();
+        List<ChessPiece> black = captured.stream().filter(p -> p.getColor() == Color.BLACK).toList();
+
+        System.out.println();
+        System.out.println("Peças capturadas");
+        System.out.print("Brancas: ");
+        System.out.print(ANSI_WHITE);
+        System.out.println(Arrays.toString(white.toArray()));
+        System.out.print(ANSI_RESET);
+        System.out.print("Pretas: ");
+        System.out.print(ANSI_YELLOW);
+        System.out.println(Arrays.toString(black.toArray()));
+        System.out.print(ANSI_RESET);
     }
+
 }

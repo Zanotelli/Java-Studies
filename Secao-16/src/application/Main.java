@@ -7,6 +7,7 @@ import chess.ChessMatch;
 import chess.ChessPiece;
 import chess.ChessPosition;
 
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class Main {
@@ -14,11 +15,12 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
         ChessMatch match = new ChessMatch();
+        LinkedList<ChessPiece> captured = new LinkedList<>();
 
         while (true){
             try {
                 UI.clearScreen();
-                UI.printMatch(match);
+                UI.printMatch(match, captured);
 
                 System.out.print("Origem: ");
                 ChessPosition origem = UI.readChessPosition(sc);
@@ -31,6 +33,8 @@ public class Main {
                 ChessPosition destino = UI.readChessPosition(sc);
 
                 ChessPiece pecaCapturada = match.performChessMove(origem,destino);
+                if(pecaCapturada != null)
+                    captured.add(pecaCapturada);
 
             } catch (BoardException e){
                 System.out.println(e.toString());
