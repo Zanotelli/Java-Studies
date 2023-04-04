@@ -14,6 +14,7 @@ public class ChessMatch {
     private int turn;
     private Color currentPlayer;
     private boolean check;
+    private boolean checkMate;
 
     private LinkedList<Piece> piecesBoard = new LinkedList<>();
     private LinkedList<Piece> piecesCaptured = new LinkedList<>();
@@ -70,8 +71,11 @@ public class ChessMatch {
 
         // Verifica se o jogador colocou o oponente em cheque
         check = testCheck(opponent(currentPlayer));
+        if(testCheckMate(opponent(currentPlayer)))
+            checkMate = true;
+        else
+            nextTurn();
 
-        nextTurn();
         return (ChessPiece) capturedPiece;
     }
 
@@ -187,20 +191,41 @@ public class ChessMatch {
         return false;
     }
 
-    private void initialSetup() {
-        placeNewPiece('c', 1, new Rook(board, Color.WHITE));
-        placeNewPiece('c', 2, new Rook(board, Color.WHITE));
-        placeNewPiece('d', 2, new Rook(board, Color.WHITE));
-        placeNewPiece('e', 2, new Rook(board, Color.WHITE));
-        placeNewPiece('e', 1, new Rook(board, Color.WHITE));
-        placeNewPiece('d', 1, new King(board, Color.WHITE));
+    private boolean testCheckMate(Color color){
+        if (!testCheck(color))
+            return false;
 
-        placeNewPiece('c', 7, new Rook(board, Color.BLACK));
-        placeNewPiece('c', 8, new Rook(board, Color.BLACK));
-        placeNewPiece('d', 7, new Rook(board, Color.BLACK));
-        placeNewPiece('e', 7, new Rook(board, Color.BLACK));
-        placeNewPiece('e', 8, new Rook(board, Color.BLACK));
-        placeNewPiece('d', 8, new King(board, Color.BLACK));
+        List<Piece> list = piecesBoard.stream().filter(p -> ((ChessPiece)p).getColor() == color).toList();
+
+        for (Piece p : list) {
+            boolean[][] mat = p.possibleMoves();
+            for (int i=0; i<board.getRows(); i++) {
+                for (int j=0; j<board.getColumns(); j++) {
+                    if (mat[i][j]) {
+                        Position source = ((ChessPiece)p).getChessPosition().toPosition();
+                        Position target = new Position(i, j);
+
+                        Piece capturedPiece = makeMove(source, target);
+                        boolean testCheck = testCheck(color);
+                        undoMove(source, target, capturedPiece);
+
+                        if (!testCheck) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    private void initialSetup() {
+        placeNewPiece('h', 7, new Rook(board, Color.WHITE));
+        placeNewPiece('d', 1, new Rook(board, Color.WHITE));
+        placeNewPiece('e', 1, new King(board, Color.WHITE));
+
+        placeNewPiece('b', 8, new Rook(board, Color.BLACK));
+        placeNewPiece('a', 8, new King(board, Color.BLACK));
     }
 
     private static String translateName(Color color){
@@ -219,5 +244,9 @@ public class ChessMatch {
 
     public boolean isCheck() {
         return check;
+    }
+
+    public boolean isCheckMate() {
+        return checkMate;
     }
 }

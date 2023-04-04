@@ -68,12 +68,17 @@ public class UI {
         printBoard(match.getPieces());
         printCapturedPieces(captured);
         System.out.println();
-        if(match.isCheck()){
-            System.out.println("CHEQUE!!");
-        }
         System.out.println("Turno " + match.getTurn() );
-        System.out.println("Esperando jogador " + translateName(match.getCurrentPlayer()));
-        System.out.println();
+        if(!match.isCheckMate()) {
+            System.out.println("Esperando jogador " + translateName(match.getCurrentPlayer()));
+            System.out.println();
+            if(match.isCheck()){
+                System.out.println("CHEQUE!!");
+            }
+        } else {
+            System.out.println("CHEQUEMATE!!");
+            System.out.println("Jogador " + translateName(match.getCurrentPlayer()) + " é o vencedor");
+        }
     }
 
     private static String translateName(Color color){
